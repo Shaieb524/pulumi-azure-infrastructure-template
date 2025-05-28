@@ -12,7 +12,7 @@ A production-ready Pulumi template for deploying containerized applications to A
 - Application Insights - Monitoring and telemetry
 - Storage Accounts - Function runtime and blob storage
 
-![Deployed Resources](docs/deployed-resources.png)
+![Deployed Resources](PulumiAzureTemplateInfra/docs/deployed-resources.png)
 
 *Example of deployed Azure resources after running `pulumi up`*
 
