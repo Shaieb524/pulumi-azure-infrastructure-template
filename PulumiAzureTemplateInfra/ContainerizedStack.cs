@@ -9,6 +9,7 @@ using Pulumi.AzureNative.Web.Inputs;
 using Pulumi.AzureNative.Storage;
 using Pulumi.AzureNative.SignalRService;
 using Pulumi.AzureNative.SignalRService.Inputs;
+using Pulumi.AzureNative.EventGrid;
 
 
 namespace PulumiAzureTemplateInfra
@@ -37,12 +38,16 @@ namespace PulumiAzureTemplateInfra
             // 4. SignalR Service
             var signalRService = CreateSignalRService(deploymentConfigs, resourceGroup);
 
+            // 5. Event Grid Topic
+            var eventGridTopic = CreateEventGridTopic(deploymentConfigs, resourceGroup);
+
 
             // Outputs
             this.ResourceGroupName = resourceGroup.Name;
             this.ApiUrl = apiAppService.DefaultHostName.Apply(hostname => $"https://{hostname}");
             this.FunctionUrl = functionApp.DefaultHostName.Apply(hostname => $"https://{hostname}");
             this.SignalREndpoint = signalRService.HostName.Apply(hostname => $"https://{hostname}");
+            this.EventGridEndpoint = eventGridTopic.Endpoint;
 
         }
 
@@ -50,6 +55,7 @@ namespace PulumiAzureTemplateInfra
         [Output] public Output<string> ApiUrl { get; set; }
         [Output] public Output<string> FunctionUrl { get; set; }
         [Output] public Output<string> SignalREndpoint { get; set; }
+        [Output] public Output<string> EventGridEndpoint { get; set; }
 
 
         #region API App Service
@@ -367,6 +373,21 @@ namespace PulumiAzureTemplateInfra
             });
 
             return signalRService;
+        }
+        #endregion
+
+        #region Event Grid Topic
+        private static Topic CreateEventGridTopic(DeploymentConfigs deploymentConfigs, ResourceGroup resourceGroup)
+        {
+            var eventGridTopic = new Topic(deploymentConfigs.ResourcesNames["EventGridTopicName"], new TopicArgs
+            {
+                TopicName = deploymentConfigs.ResourcesNames["EventGridTopicName"],
+                Location = resourceGroup.Location,
+                ResourceGroupName = resourceGroup.Name,
+                Tags = deploymentConfigs.CommonTags,
+            });
+
+            return eventGridTopic;
         }
         #endregion
     }
