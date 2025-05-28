@@ -1,0 +1,99 @@
+﻿config:
+  # Basic Configuration
+  azure-native:location: EastUS
+  PulumiAzureTemplateInfra:Location: EastUS
+  PulumiAzureTemplateInfra:Prefix: MyCompany
+  PulumiAzureTemplateInfra:Environment: Dev
+  PulumiAzureTemplateInfra:DeploymentKind: "linux"
+  
+  # Tags
+  PulumiAzureTemplateInfra:Tags:
+    Environment: "Development"
+    Owner: "DevTeam"
+    Project: "PulumiAzureTemplateInfra"
+    ManagedBy: "Pulumi"
+  
+  # Plan SKU
+  PulumiAzureTemplateInfra:PlanSku:
+    Capacity: 1
+    Family: B
+    Name: B1
+    Size: B1
+    Tier: Basic
+  
+  # Docker Settings (non-sensitive only)
+  PulumiAzureTemplateInfra:DockerSettings:
+    DockerRegistryUrl: myregistry.azurecr.io
+    DockerRegistryUserName: myregistry
+    DockerApiImageName: generic-api
+    DockerApiImageTag: latest
+    DockerFnImageName: generic-functions
+    DockerFnImageTag: latest
+  
+  # Resource Names
+  PulumiAzureTemplateInfra:ResourcesNames:
+    ResourceGroupName: PulumiAzureTemplateInfra-RG
+    ApiAppServicePlanName: PulumiAzureTemplateInfra-API-Plan
+    ApiAppServiceName: PulumiAzureTemplateInfra-API
+    ApiAppInsightsName: PulumiAzureTemplateInfra-API-Insights
+    FnAppPlanName: PulumiAzureTemplateInfra-Functions-Plan
+    FnAppName: PulumiAzureTemplateInfra-Functions
+    FnAppInsightsName: PulumiAzureTemplateInfra-Functions-Insights
+    FnStorageAccountName: pulumiazuretemplsa
+    SignalRName: PulumiAzureTemplateInfra-SignalR
+    EventGridTopicName: PulumiAzureTemplateInfra-EventGrid
+  
+  # Database Configuration (example)
+  PulumiAzureTemplateInfra:Database:
+    SqlServer: myserver.database.windows.net
+    SqlUserId: appuser
+    BlobStorageAccount: myappstorage
+  
+
+  # The idea here is to demo how to structure a Pulumi YAML exactly how appsettings.json or local.settings.json is being structured (if you are using .net core) or any other env of config file that you are using in your application.
+  # This way, you can easily map the Pulumi configuration to your application settings.
+  # API APP SETTINGS (simplified examples)
+  PulumiAzureTemplateInfra:ApiAppSettings:
+    HealthCheck: health
+    DisableHttpsRedirection: false
+    
+    # External Services (examples)
+    ExternalApi:
+      BaseUrl: https://api.example.com
+      Version: v1
+      Timeout: 30
+    
+    # Feature Flags
+    Features:
+      EnableLogging: true
+      EnableCaching: false
+      MaxRetries: 3
+    
+    # Business Settings
+    Business:
+      Currency: USD
+      TimeZone: "America/New_York"
+      MaxFileSize: 10485760
+  
+  # FUNCTION APP SETTINGS (simplified examples)
+  PulumiAzureTemplateInfra:FnAppSettings:
+    HealthCheck: api/health
+    IsEncrypted: false
+    Values:
+      FUNCTIONS_WORKER_RUNTIME: dotnet
+      AzureWebJobsSecretStorageType: files
+      FUNCTIONS_EXTENSION_VERSION: "~4"
+      WEBSITE_RUN_FROM_PACKAGE: "1"
+      
+      # Business Configuration
+      ProcessingBatchSize: 10
+      RetryAttempts: 3
+      
+    # Connection Settings (non-sensitive endpoints)
+    Connections:
+      EventGridEndpoint: https://mycompany-events.eventgrid.azure.net/api/events
+      SignalREndpoint: https://mycompany-signalr.service.signalr.net
+      ExternalServiceUrl: https://api.partner.com/webhook
+
+  # Secrets will be set via CLI - DO NOT include encrypted values in YAML
+  # Run: .\add-secrets.ps1 to set all secrets properly

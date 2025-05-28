@@ -1,0 +1,3 @@
+﻿name: PulumiAzureTemplateInfra
+runtime: dotnet
+description: Pulumi Azure infrastructure template with App Service, Functions, SignalR, and Event Grid

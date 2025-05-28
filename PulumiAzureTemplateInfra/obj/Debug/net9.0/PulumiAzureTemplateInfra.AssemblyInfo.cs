@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PulumiAzureTemplateInfra")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08891c32f4fe74b4f61cb1688da376290068e02f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PulumiAzureTemplateInfra")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PulumiAzureTemplateInfra")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
