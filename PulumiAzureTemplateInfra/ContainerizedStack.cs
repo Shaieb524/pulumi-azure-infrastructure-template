@@ -8,7 +8,8 @@ using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
 using Pulumi.AzureNative.Storage;
 using Pulumi.AzureNative.SignalRService;
-using Pulumi.AzureNative.EventGrid;
+using Pulumi.AzureNative.SignalRService.Inputs;
+
 
 namespace PulumiAzureTemplateInfra
 {
@@ -33,16 +34,22 @@ namespace PulumiAzureTemplateInfra
             // 3. Function App
             var functionApp = CreateFunctionApp(deploymentConfigs, resourceGroup);
 
+            // 4. SignalR Service
+            var signalRService = CreateSignalRService(deploymentConfigs, resourceGroup);
+
+
             // Outputs
             this.ResourceGroupName = resourceGroup.Name;
             this.ApiUrl = apiAppService.DefaultHostName.Apply(hostname => $"https://{hostname}");
             this.FunctionUrl = functionApp.DefaultHostName.Apply(hostname => $"https://{hostname}");
+            this.SignalREndpoint = signalRService.HostName.Apply(hostname => $"https://{hostname}");
 
         }
 
         [Output] public Output<string> ResourceGroupName { get; set; }
         [Output] public Output<string> ApiUrl { get; set; }
         [Output] public Output<string> FunctionUrl { get; set; }
+        [Output] public Output<string> SignalREndpoint { get; set; }
 
 
         #region API App Service
@@ -339,6 +346,27 @@ namespace PulumiAzureTemplateInfra
                 var primaryStorageKey = keys.Keys[0].Value;
                 return Output.Format($"DefaultEndpointsProtocol=https;AccountName={accountName};AccountKey={primaryStorageKey};EndpointSuffix=core.windows.net");
             });
+        }
+        #endregion
+
+        #region SignalR Service
+        private static SignalR CreateSignalRService(DeploymentConfigs deploymentConfigs, ResourceGroup resourceGroup)
+        {
+            var signalRService = new SignalR(deploymentConfigs.ResourcesNames["SignalRName"], new SignalRArgs
+            {
+                ResourceName = deploymentConfigs.ResourcesNames["SignalRName"],
+                Location = resourceGroup.Location,
+                ResourceGroupName = resourceGroup.Name,
+                Tags = deploymentConfigs.CommonTags,
+                Sku = new ResourceSkuArgs
+                {
+                    Name = "Free_F1",
+                    Tier = "Free",
+                    Capacity = 1
+                },
+            });
+
+            return signalRService;
         }
         #endregion
     }
