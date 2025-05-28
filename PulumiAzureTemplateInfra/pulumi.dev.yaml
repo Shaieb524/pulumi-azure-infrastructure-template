@@ -84,7 +84,6 @@ config:
       SignalREndpoint: https://mycompany-signalr.service.signalr.net
       ExternalServiceUrl: https://api.partner.com/webhook
 
-    secure: AAABAIDrk+XWq82qsq/Rxnqi6U2D11okH93vzbMFCoMpqGOHoU4K0CF3EjDe+UGBiiUTJT3mdFwcPtkf6E9oJtmlb6tmhNbwGZ4qY0ulCPQGRoF75472BTluMd4jn+9KV/vANfqUcMfnLVW2GZ9sdRusuCz64csm
 
 # Secrets will be set via CLI - DO NOT include encrypted values in YAML
 
@@ -104,3 +103,5 @@ config:
   PulumiAzureTemplateInfra:EventGridKey:
     secure: AAABAGD4mDiFoesjOa3OZctoZfiYag6dETXxrCx92tkth97NBjz1kzch07KHPxZfnjwMYfhmKwWYVA==
   PulumiAzureTemplateInfra:SignalRConnectionString:
+    secure: AAABAIDrk+XWq82qsq/Rxnqi6U2D11okH93vzbMFCoMpqGOHoU4K0CF3EjDe+UGBiiUTJT3mdFwcPtkf6E9oJtmlb6tmhNbwGZ4qY0ulCPQGRoF75472BTluMd4jn+9KV/vANfqUcMfnLVW2GZ9sdRusuCz64csm
+      
