@@ -253,7 +253,7 @@ namespace PulumiAzureTemplateInfra
                 ServerFarmId = appServicePlan.Id,
                 SiteConfig = new SiteConfigArgs
                 {
-                    AlwaysOn = false,
+                    AlwaysOn = true,
                     LinuxFxVersion = deploymentConfigs.FnLinuxFxVersion,
                     AppSettings = GetFunctionAppSettings(deploymentConfigs, appInsights, resourceGroup.Name, functionStorageAccount.Name),
                     HealthCheckPath = deploymentConfigs.FnAppSettings["HealthCheck"].ToString() ?? "/api/health",
@@ -275,7 +275,8 @@ namespace PulumiAzureTemplateInfra
                 new() { Name = "AzureWebJobsStorage", Value = storageConnectionString },
                 new() { Name = "FUNCTIONS_WORKER_RUNTIME", Value = "dotnet-isolated" },
                 new() { Name = "FUNCTIONS_EXTENSION_VERSION", Value = "~4" },
-                new() { Name = "WEBSITE_RUN_FROM_PACKAGE", Value = "1" },
+                new() { Name = "WEBSITE_RUN_FROM_PACKAGE", Value = "0" }, // essesential for containers
+                new() { Name = "WEBSITES_ENABLE_APP_SERVICE_STORAGE", Value = "false" }, // essesential for containers
                 new() { Name = "AzureWebJobsSecretStorageType", Value = "files" },
                 
                 // Application Insights
