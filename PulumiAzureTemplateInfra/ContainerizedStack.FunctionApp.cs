@@ -75,6 +75,8 @@ namespace PulumiAzureTemplateInfra
                     HealthCheckPath = deploymentConfigs.FnAppSettings["HealthCheck"].ToString() ?? "/api/health",
                 },
                 Tags = deploymentConfigs.CommonTags
+            }, new CustomResourceOptions { 
+                DependsOn = { functionStorageAccount, appServicePlan }
             });
 
             return functionApp;
