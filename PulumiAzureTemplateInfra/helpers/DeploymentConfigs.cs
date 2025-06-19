@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Pulumi;
 
-namespace PulumiAzureTemplateInfra
+namespace PulumiAzureTemplateInfra.helpers
 {
     public record DeploymentConfigs
     {

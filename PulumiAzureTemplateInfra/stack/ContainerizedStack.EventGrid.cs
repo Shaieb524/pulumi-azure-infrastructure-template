@@ -2,6 +2,7 @@ using System;
 using Pulumi;
 using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.EventGrid;
+using PulumiAzureTemplateInfra.helpers;
 
 namespace PulumiAzureTemplateInfra
 {

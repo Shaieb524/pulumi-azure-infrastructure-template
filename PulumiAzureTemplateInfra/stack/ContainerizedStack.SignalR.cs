@@ -3,6 +3,7 @@ using Pulumi;
 using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.SignalRService;
 using Pulumi.AzureNative.SignalRService.Inputs;
+using PulumiAzureTemplateInfra.helpers;
 
 namespace PulumiAzureTemplateInfra
 {

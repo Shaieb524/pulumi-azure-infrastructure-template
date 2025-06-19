@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PulumiAzureTemplateInfra
+namespace PulumiAzureTemplateInfra.helpers
 {
     // PulumiAzureTemplateInfra secret access template
     public class SecretAccess

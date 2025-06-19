@@ -6,6 +6,7 @@ using Pulumi.AzureNative.Insights;
 using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
+using PulumiAzureTemplateInfra.helpers;
 
 namespace PulumiAzureTemplateInfra
 {

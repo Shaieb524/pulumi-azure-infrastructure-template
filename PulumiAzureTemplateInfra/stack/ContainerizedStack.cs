@@ -1,6 +1,7 @@
 ﻿using System;
 using Pulumi;
 using Pulumi.AzureNative.Resources;
+using PulumiAzureTemplateInfra.helpers;
 
 namespace PulumiAzureTemplateInfra
 {

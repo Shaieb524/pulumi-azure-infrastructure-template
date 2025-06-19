@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json;
 
-namespace PulumiAzureTemplateInfra
+namespace PulumiAzureTemplateInfra.helpers
 {
     /// <summary>
     /// Provides utilities for parsing and converting JSON configuration data into strongly-typed C# objects.
