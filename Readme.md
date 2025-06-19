@@ -104,27 +104,34 @@ The ConfigParser handles nested YAML dynamically - add new config sections witho
 
 4. **Update Secrets**
    - Modify `add-secrets.ps1` with your actual values
-   - Add/remove secrets in `SecretAccess.cs` as needed
+   - Add/remove secrets in `helpers/SecretAccess.cs` as needed
 
 ## Working with the Infrastructure Code
 
 ### Partial Class Architecture
 The infrastructure is organized using C# partial classes for better maintainability:
 
-- **`ContainerizedStack.cs`**: Main orchestration and resource group creation
-- **`ContainerizedStack.ApiAppService.cs`**: All API App Service related infrastructure
-- **`ContainerizedStack.FunctionApp.cs`**: Azure Functions and storage infrastructure  
-- **`ContainerizedStack.SignalR.cs`**: SignalR Service infrastructure
-- **`ContainerizedStack.EventGrid.cs`**: Event Grid Topic infrastructure
+- **`stack/ContainerizedStack.cs`**: Main orchestration and resource group creation
+- **`stack/ContainerizedStack.ApiAppService.cs`**: All API App Service related infrastructure
+- **`stack/ContainerizedStack.FunctionApp.cs`**: Azure Functions and storage infrastructure  
+- **`stack/ContainerizedStack.SignalR.cs`**: SignalR Service infrastructure
+- **`stack/ContainerizedStack.EventGrid.cs`**: Event Grid Topic infrastructure
+
+### Helper Classes
+Supporting utilities are organized in the `helpers/` folder:
+
+- **`helpers/DeploymentConfigs.cs`**: Parses and provides strongly-typed access to configuration
+- **`helpers/ConfigParser.cs`**: Dynamic YAML configuration parser
+- **`helpers/SecretAccess.cs`**: Secure secret management and connection string builders
 
 ### Adding New Azure Services
-1. Create a new partial class file: `ContainerizedStack.NewService.cs`
+1. Create a new partial class file: `stack/ContainerizedStack.NewService.cs`
 2. Add the required using statements for the Azure service
 3. Implement your `CreateNewService` method
-4. Call it from the main constructor in `ContainerizedStack.cs`
+4. Call it from the main constructor in `stack/ContainerizedStack.cs`
 
 ### Modifying Existing Services
-- Navigate to the specific partial class file for the service you want to modify
+- Navigate to the specific partial class file in the `stack/` folder for the service you want to modify
 - Each file contains all related methods and configuration for that service
 - Changes are isolated and don't affect other services
 
@@ -134,16 +141,20 @@ The infrastructure is organized using C# partial classes for better maintainabil
 PulumiAzureTemplateInfra/
 ├── Pulumi.yaml                         # Main project config
 ├── Pulumi.dev.yaml                     # Environment settings
-├── SecretAccess.cs                     # Secure secret management
-├── DeploymentConfigs.cs                # Configuration parser
-├── ConfigParser.cs                     # Dynamic YAML parser
 ├── Program.cs                          # Entry point
 ├── add-secrets.ps1                     # Secret setup script
-├── ContainerizedStack.cs               # Main stack orchestration
-├── ContainerizedStack.ApiAppService.cs # API App Service infrastructure
-├── ContainerizedStack.FunctionApp.cs   # Azure Functions infrastructure
-├── ContainerizedStack.SignalR.cs       # SignalR Service infrastructure
-├── ContainerizedStack.EventGrid.cs     # Event Grid Topic infrastructure
+├── docs/
+│   └── deployed-resources.png          # Architecture diagram
+├── helpers/
+│   ├── ConfigParser.cs                 # Dynamic YAML parser
+│   ├── DeploymentConfigs.cs            # Configuration parser
+│   └── SecretAccess.cs                 # Secure secret management
+├── stack/
+│   ├── ContainerizedStack.cs           # Main stack orchestration
+│   ├── ContainerizedStack.ApiAppService.cs # API App Service infrastructure
+│   ├── ContainerizedStack.FunctionApp.cs   # Azure Functions infrastructure
+│   ├── ContainerizedStack.SignalR.cs       # SignalR Service infrastructure
+│   └── ContainerizedStack.EventGrid.cs     # Event Grid Topic infrastructure
 └── README.md                           # This file
 ```
 
